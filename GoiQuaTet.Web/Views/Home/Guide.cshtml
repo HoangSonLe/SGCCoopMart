@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Guide";
+}
+
+<div id="dom"></div>
+@*@Scripts.Render("~/dist/ScriptAppRoot")*@
+@section scripts{
+    <script src="~/dist/Scripts/ShoppingGuide.js"></script>
+    <script>
+        window.renderPage(document.getElementById('dom'));
+    </script>
+    }
+
+

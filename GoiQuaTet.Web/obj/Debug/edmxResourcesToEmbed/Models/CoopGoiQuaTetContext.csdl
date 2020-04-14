@@ -1,0 +1,811 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SGC.ComboGiaTienModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AHFSData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Molecule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Alert" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Warning" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Indication" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Dose" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="HasDoseLimit" Type="Boolean" Nullable="false" />
+    <Property Name="AHFSID" Type="Int32" Nullable="false" />
+    <Property Name="ATC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Done" Type="Boolean" />
+    <Property Name="IsVN" Type="Boolean" />
+    <Property Name="RXCUI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="AssociatedCombo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ParentComboId" Type="Int32" Nullable="false" />
+    <Property Name="ChildrenComboId" Type="Int32" Nullable="false" />
+    <Property Name="StoreId" Type="Int32" />
+    <NavigationProperty Name="Combo" Relationship="Self.FK_AssociatedCombo_Combo" FromRole="AssociatedCombo" ToRole="Combo" />
+    <NavigationProperty Name="Combo1" Relationship="Self.FK_AssociatedCombo_Combo1" FromRole="AssociatedCombo" ToRole="Combo" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_AssociatedCombo_Store" FromRole="AssociatedCombo" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Combo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ShortDescription" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsSingle" Type="Boolean" Nullable="false" />
+    <Property Name="ComboGroupId" Type="Int32" Nullable="false" />
+    <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+    <Property Name="IsDisabled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="AssociatedComboes" Relationship="Self.FK_AssociatedCombo_Combo" FromRole="Combo" ToRole="AssociatedCombo" />
+    <NavigationProperty Name="AssociatedComboes1" Relationship="Self.FK_AssociatedCombo_Combo1" FromRole="Combo" ToRole="AssociatedCombo" />
+    <NavigationProperty Name="ComboGroup" Relationship="Self.FK_Combo_ComboGroup" FromRole="Combo" ToRole="ComboGroup" />
+    <NavigationProperty Name="ComboProducts" Relationship="Self.FK_ComboProduct_Combo" FromRole="Combo" ToRole="ComboProduct" />
+    <NavigationProperty Name="OrderComboes" Relationship="Self.FK_OrderCombo_Combo" FromRole="Combo" ToRole="OrderCombo" />
+    <NavigationProperty Name="StoreGroups" Relationship="Self.ComboStoreGroup" FromRole="Combo" ToRole="StoreGroup" />
+  </EntityType>
+  <EntityType Name="ComboGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EventComboTypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Comboes" Relationship="Self.FK_Combo_ComboGroup" FromRole="ComboGroup" ToRole="Combo" />
+    <NavigationProperty Name="EventComboType" Relationship="Self.FK_ComboGroup_EventComboType" FromRole="ComboGroup" ToRole="EventComboType" />
+  </EntityType>
+  <EntityType Name="ComboProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ComboId" Type="Int32" Nullable="false" />
+    <Property Name="SKU" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Weight" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Combo" Relationship="Self.FK_ComboProduct_Combo" FromRole="ComboProduct" ToRole="Combo" />
+  </EntityType>
+  <EntityType Name="ComboType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EventComboTypes" Relationship="Self.FK_EventComboType_ComboType" FromRole="ComboType" ToRole="EventComboType" />
+  </EntityType>
+  <EntityType Name="CostBasedChargeDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PolicyId" Type="Int32" Nullable="false" />
+    <Property Name="FromPrice" Type="Int32" Nullable="false" />
+    <Property Name="ToPrice" Type="Int32" />
+    <Property Name="ChargePercentage" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeliveryChargePolicy" Relationship="Self.FK_CostBasedChargeDetails_DeliveryChargePolicy" FromRole="CostBasedChargeDetails" ToRole="DeliveryChargePolicy" />
+  </EntityType>
+  <EntityType Name="DeliveryChargeDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PolicyId" Type="Int32" Nullable="false" />
+    <Property Name="FromKm" Type="Int32" Nullable="false" />
+    <Property Name="ToKm" Type="Int32" Nullable="false" />
+    <Property Name="ChargePerKm" Type="Int32" />
+    <Property Name="TotalCharge" Type="Int32" />
+    <Property Name="MinOrderPrice" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeliveryChargePolicy" Relationship="Self.FK_DeliveryChargeDetail_DeliveryChargePolicy" FromRole="DeliveryChargeDetail" ToRole="DeliveryChargePolicy" />
+  </EntityType>
+  <EntityType Name="DeliveryChargePolicy">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StoreGroupId" Type="Int32" Nullable="false" />
+    <Property Name="EventComboTypeId" Type="Int32" Nullable="false" />
+    <Property Name="ChargeSchema" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostBasedChargeDetails" Relationship="Self.FK_CostBasedChargeDetails_DeliveryChargePolicy" FromRole="DeliveryChargePolicy" ToRole="CostBasedChargeDetails" />
+    <NavigationProperty Name="DeliveryChargeDetails" Relationship="Self.FK_DeliveryChargeDetail_DeliveryChargePolicy" FromRole="DeliveryChargePolicy" ToRole="DeliveryChargeDetail" />
+    <NavigationProperty Name="EventComboType" Relationship="Self.FK_DeliveryChargePolicy_EventComboType" FromRole="DeliveryChargePolicy" ToRole="EventComboType" />
+    <NavigationProperty Name="StoreGroup" Relationship="Self.FK_DeliveryChargePolicy_StoreGroup" FromRole="DeliveryChargePolicy" ToRole="StoreGroup" />
+  </EntityType>
+  <EntityType Name="DeliveryRecord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DriverInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StoreId" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_DeliveryRecord_Store" FromRole="DeliveryRecord" ToRole="Store" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_DeliveryRecord" FromRole="DeliveryRecord" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="DeliveryTimeConfig">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EventComboTypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EventComboType" Relationship="Self.FK_DeliveryTimeConfig_EventComboType" FromRole="DeliveryTimeConfig" ToRole="EventComboType" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Activation" Type="Boolean" Nullable="false" />
+    <Property Name="BeforeSaleDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AfterSaleDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EventComboTypes" Relationship="Self.FK_EventComboType_Event" FromRole="Event" ToRole="EventComboType" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Event" FromRole="Event" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="EventComboType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="ComboTypeId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ComboGroups" Relationship="Self.FK_ComboGroup_EventComboType" FromRole="EventComboType" ToRole="ComboGroup" />
+    <NavigationProperty Name="ComboType" Relationship="Self.FK_EventComboType_ComboType" FromRole="EventComboType" ToRole="ComboType" />
+    <NavigationProperty Name="DeliveryChargePolicies" Relationship="Self.FK_DeliveryChargePolicy_EventComboType" FromRole="EventComboType" ToRole="DeliveryChargePolicy" />
+    <NavigationProperty Name="DeliveryTimeConfigs" Relationship="Self.FK_DeliveryTimeConfig_EventComboType" FromRole="EventComboType" ToRole="DeliveryTimeConfig" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_EventComboType_Event" FromRole="EventComboType" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="FileAttachment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ext" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Width" Type="Int32" />
+    <Property Name="Height" Type="Int32" />
+    <Property Name="ParentId" Type="Int32" Nullable="false" />
+    <Property Name="ParentType" Type="Int32" Nullable="false" />
+    <Property Name="IsPrioritize" Type="Boolean" />
+    <NavigationProperty Name="FileAttachmentData" Relationship="Self.FK_FileAttachmentData_FileAttachment" FromRole="FileAttachment" ToRole="FileAttachmentData" />
+  </EntityType>
+  <EntityType Name="FileAttachmentData">
+    <Key>
+      <PropertyRef Name="FileId" />
+    </Key>
+    <Property Name="FileId" Type="Int32" Nullable="false" />
+    <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <NavigationProperty Name="FileAttachment" Relationship="Self.FK_FileAttachmentData_FileAttachment" FromRole="FileAttachmentData" ToRole="FileAttachment" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerAddressId" Type="Int32" Nullable="false" />
+    <Property Name="ReceiverName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReceiverPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReceiverEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ReceiverAddressId" Type="Int32" Nullable="false" />
+    <Property Name="SendToCustomer" Type="Boolean" Nullable="false" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="PaidPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+    <Property Name="StoreId" Type="Int32" Nullable="false" />
+    <Property Name="DeliveryRecordId" Type="Int32" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Charge" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="StringId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Distance" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="MinimumPaymentRequire" Type="Int32" Nullable="false" />
+    <Property Name="OrderStoreId" Type="Int32" />
+    <NavigationProperty Name="DeliveryRecord" Relationship="Self.FK_Order_DeliveryRecord" FromRole="Order" ToRole="DeliveryRecord" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_Order_Event" FromRole="Order" ToRole="Event" />
+    <NavigationProperty Name="OrderAddress" Relationship="Self.FK_Order_OrderAddress" FromRole="Order" ToRole="OrderAddress" />
+    <NavigationProperty Name="OrderAddress1" Relationship="Self.FK_Order_OrderAddress1" FromRole="Order" ToRole="OrderAddress" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_Order_Store" FromRole="Order" ToRole="Store" />
+    <NavigationProperty Name="Store1" Relationship="Self.FK_Order_Store1" FromRole="Order" ToRole="Store" />
+    <NavigationProperty Name="OrderComboes" Relationship="Self.FK_OrderCombo_Order" FromRole="Order" ToRole="OrderCombo" />
+    <NavigationProperty Name="OrderPayments" Relationship="Self.FK_OrderPayment_Order" FromRole="Order" ToRole="OrderPayment" />
+    <NavigationProperty Name="OrderUpdateStatusHistories" Relationship="Self.FK_OrderUpdateStatusHistory_Order" FromRole="Order" ToRole="OrderUpdateStatusHistory" />
+  </EntityType>
+  <EntityType Name="OrderAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RawAddress" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="District" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_OrderAddress" FromRole="OrderAddress" ToRole="Order" />
+    <NavigationProperty Name="Orders1" Relationship="Self.FK_Order_OrderAddress1" FromRole="OrderAddress" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="OrderCombo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ComboId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Int32" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Combo" Relationship="Self.FK_OrderCombo_Combo" FromRole="OrderCombo" ToRole="Combo" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrderCombo_Order" FromRole="OrderCombo" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="OrderPayment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="IsCash" Type="Boolean" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="BankCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PaymentStoreId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrderPayment_Order" FromRole="OrderPayment" ToRole="Order" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_OrderPayment_Store" FromRole="OrderPayment" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="OrderUpdateStatusHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="NewStatus" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrderUpdateStatusHistory_Order" FromRole="OrderUpdateStatusHistory" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="SaleBanner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Style" Type="Int32" Nullable="false" />
+    <Property Name="Header" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HeaderColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DescriptionColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Animation" Type="Int32" Nullable="false" />
+    <Property Name="IsMobile" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="Duration" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccountInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContactInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OnlinePayment" Type="Boolean" Nullable="false" />
+    <Property Name="Longtitude" Type="Double" Nullable="false" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AssociatedComboes" Relationship="Self.FK_AssociatedCombo_Store" FromRole="Store" ToRole="AssociatedCombo" />
+    <NavigationProperty Name="DeliveryRecords" Relationship="Self.FK_DeliveryRecord_Store" FromRole="Store" ToRole="DeliveryRecord" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Store" FromRole="Store" ToRole="Order" />
+    <NavigationProperty Name="Orders1" Relationship="Self.FK_Order_Store1" FromRole="Store" ToRole="Order" />
+    <NavigationProperty Name="OrderPayments" Relationship="Self.FK_OrderPayment_Store" FromRole="Store" ToRole="OrderPayment" />
+    <NavigationProperty Name="StoreGroups" Relationship="Self.StoreGroupDetail" FromRole="Store" ToRole="StoreGroup" />
+  </EntityType>
+  <EntityType Name="StoreGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupType" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="DeliveryChargePolicies" Relationship="Self.FK_DeliveryChargePolicy_StoreGroup" FromRole="StoreGroup" ToRole="DeliveryChargePolicy" />
+    <NavigationProperty Name="Comboes" Relationship="Self.ComboStoreGroup" FromRole="StoreGroup" ToRole="Combo" />
+    <NavigationProperty Name="Stores" Relationship="Self.StoreGroupDetail" FromRole="StoreGroup" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="TextConfig">
+    <Key>
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_AssociatedCombo_Combo">
+    <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+    <End Role="AssociatedCombo" Type="Self.AssociatedCombo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Combo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssociatedCombo">
+        <PropertyRef Name="ParentComboId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssociatedCombo_Combo1">
+    <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+    <End Role="AssociatedCombo" Type="Self.AssociatedCombo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Combo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssociatedCombo">
+        <PropertyRef Name="ChildrenComboId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssociatedCombo_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="AssociatedCombo" Type="Self.AssociatedCombo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssociatedCombo">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Combo_ComboGroup">
+    <End Role="ComboGroup" Type="Self.ComboGroup" Multiplicity="1" />
+    <End Role="Combo" Type="Self.Combo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ComboGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Combo">
+        <PropertyRef Name="ComboGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboProduct_Combo">
+    <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+    <End Role="ComboProduct" Type="Self.ComboProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Combo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ComboProduct">
+        <PropertyRef Name="ComboId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderCombo_Combo">
+    <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+    <End Role="OrderCombo" Type="Self.OrderCombo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Combo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderCombo">
+        <PropertyRef Name="ComboId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboGroup_EventComboType">
+    <End Role="EventComboType" Type="Self.EventComboType" Multiplicity="1" />
+    <End Role="ComboGroup" Type="Self.ComboGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventComboType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ComboGroup">
+        <PropertyRef Name="EventComboTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventComboType_ComboType">
+    <End Role="ComboType" Type="Self.ComboType" Multiplicity="1" />
+    <End Role="EventComboType" Type="Self.EventComboType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ComboType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventComboType">
+        <PropertyRef Name="ComboTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostBasedChargeDetails_DeliveryChargePolicy">
+    <End Role="DeliveryChargePolicy" Type="Self.DeliveryChargePolicy" Multiplicity="1" />
+    <End Role="CostBasedChargeDetails" Type="Self.CostBasedChargeDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryChargePolicy">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CostBasedChargeDetails">
+        <PropertyRef Name="PolicyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeliveryChargeDetail_DeliveryChargePolicy">
+    <End Role="DeliveryChargePolicy" Type="Self.DeliveryChargePolicy" Multiplicity="1" />
+    <End Role="DeliveryChargeDetail" Type="Self.DeliveryChargeDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryChargePolicy">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DeliveryChargeDetail">
+        <PropertyRef Name="PolicyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeliveryChargePolicy_EventComboType">
+    <End Role="EventComboType" Type="Self.EventComboType" Multiplicity="1" />
+    <End Role="DeliveryChargePolicy" Type="Self.DeliveryChargePolicy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventComboType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DeliveryChargePolicy">
+        <PropertyRef Name="EventComboTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeliveryChargePolicy_StoreGroup">
+    <End Role="StoreGroup" Type="Self.StoreGroup" Multiplicity="1" />
+    <End Role="DeliveryChargePolicy" Type="Self.DeliveryChargePolicy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DeliveryChargePolicy">
+        <PropertyRef Name="StoreGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeliveryRecord_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="DeliveryRecord" Type="Self.DeliveryRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DeliveryRecord">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_DeliveryRecord">
+    <End Role="DeliveryRecord" Type="Self.DeliveryRecord" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryRecord">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="DeliveryRecordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeliveryTimeConfig_EventComboType">
+    <End Role="EventComboType" Type="Self.EventComboType" Multiplicity="1" />
+    <End Role="DeliveryTimeConfig" Type="Self.DeliveryTimeConfig" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventComboType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DeliveryTimeConfig">
+        <PropertyRef Name="EventComboTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventComboType_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="EventComboType" Type="Self.EventComboType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventComboType">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FileAttachmentData_FileAttachment">
+    <End Role="FileAttachment" Type="Self.FileAttachment" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FileAttachmentData" Type="Self.FileAttachmentData" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="FileAttachment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FileAttachmentData">
+        <PropertyRef Name="FileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_OrderAddress">
+    <End Role="OrderAddress" Type="Self.OrderAddress" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderAddress">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_OrderAddress1">
+    <End Role="OrderAddress" Type="Self.OrderAddress" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderAddress">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ReceiverAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Store1">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="OrderStoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderCombo_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderCombo" Type="Self.OrderCombo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderCombo">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderPayment_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderPayment" Type="Self.OrderPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderPayment">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderUpdateStatusHistory_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderUpdateStatusHistory" Type="Self.OrderUpdateStatusHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderUpdateStatusHistory">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderPayment_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="OrderPayment" Type="Self.OrderPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderPayment">
+        <PropertyRef Name="PaymentStoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ComboStoreGroup">
+    <End Role="Combo" Type="Self.Combo" Multiplicity="*" />
+    <End Role="StoreGroup" Type="Self.StoreGroup" Multiplicity="*" />
+  </Association>
+  <Association Name="StoreGroupDetail">
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <End Role="StoreGroup" Type="Self.StoreGroup" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="GoiQuaTetEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AHFSDatas" EntityType="Self.AHFSData" />
+    <EntitySet Name="AssociatedComboes" EntityType="Self.AssociatedCombo" />
+    <EntitySet Name="Comboes" EntityType="Self.Combo" />
+    <EntitySet Name="ComboGroups" EntityType="Self.ComboGroup" />
+    <EntitySet Name="ComboProducts" EntityType="Self.ComboProduct" />
+    <EntitySet Name="ComboTypes" EntityType="Self.ComboType" />
+    <EntitySet Name="CostBasedChargeDetails" EntityType="Self.CostBasedChargeDetail" />
+    <EntitySet Name="DeliveryChargeDetails" EntityType="Self.DeliveryChargeDetail" />
+    <EntitySet Name="DeliveryChargePolicies" EntityType="Self.DeliveryChargePolicy" />
+    <EntitySet Name="DeliveryRecords" EntityType="Self.DeliveryRecord" />
+    <EntitySet Name="DeliveryTimeConfigs" EntityType="Self.DeliveryTimeConfig" />
+    <EntitySet Name="Events" EntityType="Self.Event" />
+    <EntitySet Name="EventComboTypes" EntityType="Self.EventComboType" />
+    <EntitySet Name="FileAttachments" EntityType="Self.FileAttachment" />
+    <EntitySet Name="FileAttachmentDatas" EntityType="Self.FileAttachmentData" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="OrderAddresses" EntityType="Self.OrderAddress" />
+    <EntitySet Name="OrderComboes" EntityType="Self.OrderCombo" />
+    <EntitySet Name="OrderPayments" EntityType="Self.OrderPayment" />
+    <EntitySet Name="OrderUpdateStatusHistories" EntityType="Self.OrderUpdateStatusHistory" />
+    <EntitySet Name="SaleBanners" EntityType="Self.SaleBanner" />
+    <EntitySet Name="Stores" EntityType="Self.Store" />
+    <EntitySet Name="StoreGroups" EntityType="Self.StoreGroup" />
+    <EntitySet Name="TextConfigs" EntityType="Self.TextConfig" />
+    <AssociationSet Name="FK_AssociatedCombo_Combo" Association="Self.FK_AssociatedCombo_Combo">
+      <End Role="Combo" EntitySet="Comboes" />
+      <End Role="AssociatedCombo" EntitySet="AssociatedComboes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssociatedCombo_Combo1" Association="Self.FK_AssociatedCombo_Combo1">
+      <End Role="Combo" EntitySet="Comboes" />
+      <End Role="AssociatedCombo" EntitySet="AssociatedComboes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssociatedCombo_Store" Association="Self.FK_AssociatedCombo_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="AssociatedCombo" EntitySet="AssociatedComboes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Combo_ComboGroup" Association="Self.FK_Combo_ComboGroup">
+      <End Role="ComboGroup" EntitySet="ComboGroups" />
+      <End Role="Combo" EntitySet="Comboes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboProduct_Combo" Association="Self.FK_ComboProduct_Combo">
+      <End Role="Combo" EntitySet="Comboes" />
+      <End Role="ComboProduct" EntitySet="ComboProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderCombo_Combo" Association="Self.FK_OrderCombo_Combo">
+      <End Role="Combo" EntitySet="Comboes" />
+      <End Role="OrderCombo" EntitySet="OrderComboes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboGroup_EventComboType" Association="Self.FK_ComboGroup_EventComboType">
+      <End Role="EventComboType" EntitySet="EventComboTypes" />
+      <End Role="ComboGroup" EntitySet="ComboGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventComboType_ComboType" Association="Self.FK_EventComboType_ComboType">
+      <End Role="ComboType" EntitySet="ComboTypes" />
+      <End Role="EventComboType" EntitySet="EventComboTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostBasedChargeDetails_DeliveryChargePolicy" Association="Self.FK_CostBasedChargeDetails_DeliveryChargePolicy">
+      <End Role="DeliveryChargePolicy" EntitySet="DeliveryChargePolicies" />
+      <End Role="CostBasedChargeDetails" EntitySet="CostBasedChargeDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeliveryChargeDetail_DeliveryChargePolicy" Association="Self.FK_DeliveryChargeDetail_DeliveryChargePolicy">
+      <End Role="DeliveryChargePolicy" EntitySet="DeliveryChargePolicies" />
+      <End Role="DeliveryChargeDetail" EntitySet="DeliveryChargeDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeliveryChargePolicy_EventComboType" Association="Self.FK_DeliveryChargePolicy_EventComboType">
+      <End Role="EventComboType" EntitySet="EventComboTypes" />
+      <End Role="DeliveryChargePolicy" EntitySet="DeliveryChargePolicies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeliveryChargePolicy_StoreGroup" Association="Self.FK_DeliveryChargePolicy_StoreGroup">
+      <End Role="StoreGroup" EntitySet="StoreGroups" />
+      <End Role="DeliveryChargePolicy" EntitySet="DeliveryChargePolicies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeliveryRecord_Store" Association="Self.FK_DeliveryRecord_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="DeliveryRecord" EntitySet="DeliveryRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_DeliveryRecord" Association="Self.FK_Order_DeliveryRecord">
+      <End Role="DeliveryRecord" EntitySet="DeliveryRecords" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeliveryTimeConfig_EventComboType" Association="Self.FK_DeliveryTimeConfig_EventComboType">
+      <End Role="EventComboType" EntitySet="EventComboTypes" />
+      <End Role="DeliveryTimeConfig" EntitySet="DeliveryTimeConfigs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventComboType_Event" Association="Self.FK_EventComboType_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="EventComboType" EntitySet="EventComboTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Event" Association="Self.FK_Order_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FileAttachmentData_FileAttachment" Association="Self.FK_FileAttachmentData_FileAttachment">
+      <End Role="FileAttachment" EntitySet="FileAttachments" />
+      <End Role="FileAttachmentData" EntitySet="FileAttachmentDatas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_OrderAddress" Association="Self.FK_Order_OrderAddress">
+      <End Role="OrderAddress" EntitySet="OrderAddresses" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_OrderAddress1" Association="Self.FK_Order_OrderAddress1">
+      <End Role="OrderAddress" EntitySet="OrderAddresses" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Store" Association="Self.FK_Order_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Store1" Association="Self.FK_Order_Store1">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderCombo_Order" Association="Self.FK_OrderCombo_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderCombo" EntitySet="OrderComboes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderPayment_Order" Association="Self.FK_OrderPayment_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderPayment" EntitySet="OrderPayments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderUpdateStatusHistory_Order" Association="Self.FK_OrderUpdateStatusHistory_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderUpdateStatusHistory" EntitySet="OrderUpdateStatusHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderPayment_Store" Association="Self.FK_OrderPayment_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="OrderPayment" EntitySet="OrderPayments" />
+    </AssociationSet>
+    <AssociationSet Name="ComboStoreGroup" Association="Self.ComboStoreGroup">
+      <End Role="Combo" EntitySet="Comboes" />
+      <End Role="StoreGroup" EntitySet="StoreGroups" />
+    </AssociationSet>
+    <AssociationSet Name="StoreGroupDetail" Association="Self.StoreGroupDetail">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="StoreGroup" EntitySet="StoreGroups" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

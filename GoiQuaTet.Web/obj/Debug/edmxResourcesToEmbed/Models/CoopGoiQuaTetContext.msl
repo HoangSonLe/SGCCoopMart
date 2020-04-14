@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SGCComboGiaTienModelStoreContainer" CdmEntityContainer="GoiQuaTetEntities">
+    <EntitySetMapping Name="AHFSDatas">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.AHFSData">
+        <MappingFragment StoreEntitySet="AHFSData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Molecule" ColumnName="Molecule" />
+          <ScalarProperty Name="Alert" ColumnName="Alert" />
+          <ScalarProperty Name="Warning" ColumnName="Warning" />
+          <ScalarProperty Name="Indication" ColumnName="Indication" />
+          <ScalarProperty Name="Dose" ColumnName="Dose" />
+          <ScalarProperty Name="HasDoseLimit" ColumnName="HasDoseLimit" />
+          <ScalarProperty Name="AHFSID" ColumnName="AHFSID" />
+          <ScalarProperty Name="ATC" ColumnName="ATC" />
+          <ScalarProperty Name="Done" ColumnName="Done" />
+          <ScalarProperty Name="IsVN" ColumnName="IsVN" />
+          <ScalarProperty Name="RXCUI" ColumnName="RXCUI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssociatedComboes">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.AssociatedCombo">
+        <MappingFragment StoreEntitySet="AssociatedCombo">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentComboId" ColumnName="ParentComboId" />
+          <ScalarProperty Name="ChildrenComboId" ColumnName="ChildrenComboId" />
+          <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comboes">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.Combo">
+        <MappingFragment StoreEntitySet="Combo">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="IsSingle" ColumnName="IsSingle" />
+          <ScalarProperty Name="ComboGroupId" ColumnName="ComboGroupId" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComboGroups">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.ComboGroup">
+        <MappingFragment StoreEntitySet="ComboGroup">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EventComboTypeId" ColumnName="EventComboTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComboProducts">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.ComboProduct">
+        <MappingFragment StoreEntitySet="ComboProduct">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ComboId" ColumnName="ComboId" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComboTypes">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.ComboType">
+        <MappingFragment StoreEntitySet="ComboType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostBasedChargeDetails">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.CostBasedChargeDetail">
+        <MappingFragment StoreEntitySet="CostBasedChargeDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+          <ScalarProperty Name="FromPrice" ColumnName="FromPrice" />
+          <ScalarProperty Name="ToPrice" ColumnName="ToPrice" />
+          <ScalarProperty Name="ChargePercentage" ColumnName="ChargePercentage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryChargeDetails">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.DeliveryChargeDetail">
+        <MappingFragment StoreEntitySet="DeliveryChargeDetail">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+          <ScalarProperty Name="FromKm" ColumnName="FromKm" />
+          <ScalarProperty Name="ToKm" ColumnName="ToKm" />
+          <ScalarProperty Name="ChargePerKm" ColumnName="ChargePerKm" />
+          <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
+          <ScalarProperty Name="MinOrderPrice" ColumnName="MinOrderPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryChargePolicies">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.DeliveryChargePolicy">
+        <MappingFragment StoreEntitySet="DeliveryChargePolicy">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreGroupId" ColumnName="StoreGroupId" />
+          <ScalarProperty Name="EventComboTypeId" ColumnName="EventComboTypeId" />
+          <ScalarProperty Name="ChargeSchema" ColumnName="ChargeSchema" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryRecords">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.DeliveryRecord">
+        <MappingFragment StoreEntitySet="DeliveryRecord">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DriverInfo" ColumnName="DriverInfo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryTimeConfigs">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.DeliveryTimeConfig">
+        <MappingFragment StoreEntitySet="DeliveryTimeConfig">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="DateDescription" ColumnName="DateDescription" />
+          <ScalarProperty Name="EventComboTypeId" ColumnName="EventComboTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.Event">
+        <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Activation" ColumnName="Activation" />
+          <ScalarProperty Name="BeforeSaleDescription" ColumnName="BeforeSaleDescription" />
+          <ScalarProperty Name="AfterSaleDescription" ColumnName="AfterSaleDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventComboTypes">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.EventComboType">
+        <MappingFragment StoreEntitySet="EventComboType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="ComboTypeId" ColumnName="ComboTypeId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileAttachments">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.FileAttachment">
+        <MappingFragment StoreEntitySet="FileAttachment">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Ext" ColumnName="Ext" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="ParentType" ColumnName="ParentType" />
+          <ScalarProperty Name="IsPrioritize" ColumnName="IsPrioritize" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileAttachmentDatas">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.FileAttachmentData">
+        <MappingFragment StoreEntitySet="FileAttachmentData">
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+          <ScalarProperty Name="CustomerAddressId" ColumnName="CustomerAddressId" />
+          <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+          <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+          <ScalarProperty Name="ReceiverEmail" ColumnName="ReceiverEmail" />
+          <ScalarProperty Name="ReceiverAddressId" ColumnName="ReceiverAddressId" />
+          <ScalarProperty Name="SendToCustomer" ColumnName="SendToCustomer" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="PaidPrice" ColumnName="PaidPrice" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+          <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+          <ScalarProperty Name="DeliveryRecordId" ColumnName="DeliveryRecordId" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Charge" ColumnName="Charge" />
+          <ScalarProperty Name="StringId" ColumnName="StringId" />
+          <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+          <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="MinimumPaymentRequire" ColumnName="MinimumPaymentRequire" />
+          <ScalarProperty Name="OrderStoreId" ColumnName="OrderStoreId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderAddresses">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.OrderAddress">
+        <MappingFragment StoreEntitySet="OrderAddress">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RawAddress" ColumnName="RawAddress" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="District" ColumnName="District" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderComboes">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.OrderCombo">
+        <MappingFragment StoreEntitySet="OrderCombo">
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="ComboId" ColumnName="ComboId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderPayments">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.OrderPayment">
+        <MappingFragment StoreEntitySet="OrderPayment">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="IsCash" ColumnName="IsCash" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="PaymentStoreId" ColumnName="PaymentStoreId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderUpdateStatusHistories">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.OrderUpdateStatusHistory">
+        <MappingFragment StoreEntitySet="OrderUpdateStatusHistory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SaleBanners">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.SaleBanner">
+        <MappingFragment StoreEntitySet="SaleBanner">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Style" ColumnName="Style" />
+          <ScalarProperty Name="Header" ColumnName="Header" />
+          <ScalarProperty Name="HeaderColor" ColumnName="HeaderColor" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DescriptionColor" ColumnName="DescriptionColor" />
+          <ScalarProperty Name="Animation" ColumnName="Animation" />
+          <ScalarProperty Name="IsMobile" ColumnName="IsMobile" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stores">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.Store">
+        <MappingFragment StoreEntitySet="Store">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AccountInfo" ColumnName="AccountInfo" />
+          <ScalarProperty Name="ContactInfo" ColumnName="ContactInfo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OnlinePayment" ColumnName="OnlinePayment" />
+          <ScalarProperty Name="Longtitude" ColumnName="Longtitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="City" ColumnName="City" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreGroups">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.StoreGroup">
+        <MappingFragment StoreEntitySet="StoreGroup">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GroupType" ColumnName="GroupType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TextConfigs">
+      <EntityTypeMapping TypeName="SGC.ComboGiaTienModel.TextConfig">
+        <MappingFragment StoreEntitySet="TextConfig">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ComboStoreGroup" TypeName="SGC.ComboGiaTienModel.ComboStoreGroup" StoreEntitySet="ComboStoreGroup">
+      <EndProperty Name="Combo">
+        <ScalarProperty Name="Id" ColumnName="ComboId" />
+      </EndProperty>
+      <EndProperty Name="StoreGroup">
+        <ScalarProperty Name="Id" ColumnName="StoreGroupId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="StoreGroupDetail" TypeName="SGC.ComboGiaTienModel.StoreGroupDetail" StoreEntitySet="StoreGroupDetail">
+      <EndProperty Name="Store">
+        <ScalarProperty Name="Id" ColumnName="StoretId" />
+      </EndProperty>
+      <EndProperty Name="StoreGroup">
+        <ScalarProperty Name="Id" ColumnName="StoreGroupId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*<link href="~/dist/src/Contents/css/AppRoot.css" rel="stylesheet" />*@
+</head>
+<body style="margin:0;padding:0;">
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/dist/CssAppRoot")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

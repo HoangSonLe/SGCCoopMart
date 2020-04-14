@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Cart";
+}
+
+<div id="cart"></div>
+@section scripts{
+    @Scripts.Render("~/dist/ScriptAppCart")
+    @*<script type="text/javascript" charset="UTF-8" src="~/dist/Scripts/AppCart.js"></script>*@
+    <script>
+        window.renderPage(document.getElementById('cart'));
+    </script>
+
+}

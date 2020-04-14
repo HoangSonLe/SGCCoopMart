@@ -1,0 +1,3 @@
+E:\i3TrainProject\GoiQuaTet\GoiQuaTet.Node\obj\Debug\GoiQuaTet.Node.njsprojAssemblyReference.cache
+E:\i3TrainProject\GoiQuaTet\GoiQuaTet.Node\obj\Debug\GoiQuaTet.Node.njsproj.CoreCompileInputs.cache
+E:\i3TrainProject\GoiQuaTet\GoiQuaTet.Node\bin\Microsoft.NodejsTools.WebRole.dll

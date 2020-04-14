@@ -1,0 +1,1079 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SGCComboGiaTienModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AHFSData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Molecule" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Alert" Type="image" />
+          <Property Name="Warning" Type="image" />
+          <Property Name="Indication" Type="nvarchar(max)" />
+          <Property Name="Dose" Type="image" />
+          <Property Name="HasDoseLimit" Type="bit" Nullable="false" />
+          <Property Name="AHFSID" Type="int" Nullable="false" />
+          <Property Name="ATC" Type="varchar" MaxLength="50" />
+          <Property Name="Done" Type="bit" />
+          <Property Name="IsVN" Type="bit" />
+          <Property Name="RXCUI" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="AssociatedCombo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentComboId" Type="int" Nullable="false" />
+          <Property Name="ChildrenComboId" Type="int" Nullable="false" />
+          <Property Name="StoreId" Type="int" />
+        </EntityType>
+        <EntityType Name="Combo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ShortDescription" Type="nvarchar" MaxLength="600" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsSingle" Type="bit" Nullable="false" />
+          <Property Name="ComboGroupId" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="int" Nullable="false" />
+          <Property Name="IsDisabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="EventComboTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ComboId" Type="int" Nullable="false" />
+          <Property Name="SKU" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Weight" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboStoreGroup">
+          <Key>
+            <PropertyRef Name="ComboId" />
+            <PropertyRef Name="StoreGroupId" />
+          </Key>
+          <Property Name="ComboId" Type="int" Nullable="false" />
+          <Property Name="StoreGroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CostBasedChargeDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PolicyId" Type="int" Nullable="false" />
+          <Property Name="FromPrice" Type="int" Nullable="false" />
+          <Property Name="ToPrice" Type="int" />
+          <Property Name="ChargePercentage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryChargeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PolicyId" Type="int" Nullable="false" />
+          <Property Name="FromKm" Type="int" Nullable="false" />
+          <Property Name="ToKm" Type="int" Nullable="false" />
+          <Property Name="ChargePerKm" Type="int" />
+          <Property Name="TotalCharge" Type="int" />
+          <Property Name="MinOrderPrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryChargePolicy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreGroupId" Type="int" Nullable="false" />
+          <Property Name="EventComboTypeId" Type="int" Nullable="false" />
+          <Property Name="ChargeSchema" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DriverInfo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CompletedDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryTimeConfig">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="DateDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EventComboTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Activation" Type="bit" Nullable="false" />
+          <Property Name="BeforeSaleDescription" Type="nvarchar(max)" />
+          <Property Name="AfterSaleDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="EventComboType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="ComboTypeId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateStart" Type="datetime" Nullable="false" />
+          <Property Name="DateEnd" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FileAttachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Ext" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Height" Type="int" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="ParentType" Type="int" Nullable="false" />
+          <Property Name="IsPrioritize" Type="bit" />
+        </EntityType>
+        <EntityType Name="FileAttachmentData">
+          <Key>
+            <PropertyRef Name="FileId" />
+          </Key>
+          <Property Name="FileId" Type="int" Nullable="false" />
+          <Property Name="Data" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CustomerPhone" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="CustomerEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CustomerAddressId" Type="int" Nullable="false" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ReceiverPhone" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ReceiverEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="ReceiverAddressId" Type="int" Nullable="false" />
+          <Property Name="SendToCustomer" Type="bit" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PaidPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CompletedDate" Type="datetime" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="DeliveryRecordId" Type="int" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Charge" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="StringId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CardNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeliveryTime" Type="datetime" Nullable="false" />
+          <Property Name="Distance" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="MinimumPaymentRequire" Type="int" Nullable="false" />
+          <Property Name="OrderStoreId" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RawAddress" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="District" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="OrderCombo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ComboId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderPayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="IsCash" Type="bit" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BankCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="PaymentStoreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderUpdateStatusHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="NewStatus" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleBanner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Style" Type="int" Nullable="false" />
+          <Property Name="Header" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HeaderColor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DescriptionColor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Animation" Type="int" Nullable="false" />
+          <Property Name="IsMobile" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="500" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="int" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="AccountInfo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContactInfo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OnlinePayment" Type="bit" Nullable="false" />
+          <Property Name="Longtitude" Type="float" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupType" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreGroupDetail">
+          <Key>
+            <PropertyRef Name="StoretId" />
+            <PropertyRef Name="StoreGroupId" />
+          </Key>
+          <Property Name="StoretId" Type="int" Nullable="false" />
+          <Property Name="StoreGroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TextConfig">
+          <Key>
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityContainer Name="SGCComboGiaTienModelStoreContainer">
+          <EntitySet Name="AHFSData" EntityType="Self.AHFSData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssociatedCombo" EntityType="Self.AssociatedCombo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComboGroup" EntityType="Self.ComboGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComboProduct" EntityType="Self.ComboProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComboStoreGroup" EntityType="Self.ComboStoreGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComboType" EntityType="Self.ComboType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CostBasedChargeDetails" EntityType="Self.CostBasedChargeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryChargeDetail" EntityType="Self.DeliveryChargeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryChargePolicy" EntityType="Self.DeliveryChargePolicy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryRecord" EntityType="Self.DeliveryRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryTimeConfig" EntityType="Self.DeliveryTimeConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventComboType" EntityType="Self.EventComboType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileAttachment" EntityType="Self.FileAttachment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileAttachmentData" EntityType="Self.FileAttachmentData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAddress" EntityType="Self.OrderAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderCombo" EntityType="Self.OrderCombo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderPayment" EntityType="Self.OrderPayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderUpdateStatusHistory" EntityType="Self.OrderUpdateStatusHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleBanner" EntityType="Self.SaleBanner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoreGroup" EntityType="Self.StoreGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoreGroupDetail" EntityType="Self.StoreGroupDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TextConfig" EntityType="Self.TextConfig" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SGCComboGiaTienModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AHFSData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Molecule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Alert" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Warning" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Indication" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dose" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="HasDoseLimit" Type="Boolean" Nullable="false" />
+          <Property Name="AHFSID" Type="Int32" Nullable="false" />
+          <Property Name="ATC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Done" Type="Boolean" />
+          <Property Name="IsVN" Type="Boolean" />
+          <Property Name="RXCUI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AssociatedCombo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentComboId" Type="Int32" Nullable="false" />
+          <Property Name="ChildrenComboId" Type="Int32" Nullable="false" />
+          <Property Name="StoreId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Combo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShortDescription" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsSingle" Type="Boolean" Nullable="false" />
+          <Property Name="ComboGroupId" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+          <Property Name="IsDisabled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EventComboTypeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ComboId" Type="Int32" Nullable="false" />
+          <Property Name="SKU" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Weight" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboStoreGroup">
+          <Key>
+            <PropertyRef Name="ComboId" />
+            <PropertyRef Name="StoreGroupId" />
+          </Key>
+          <Property Name="ComboId" Type="Int32" Nullable="false" />
+          <Property Name="StoreGroupId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CostBasedChargeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PolicyId" Type="Int32" Nullable="false" />
+          <Property Name="FromPrice" Type="Int32" Nullable="false" />
+          <Property Name="ToPrice" Type="Int32" />
+          <Property Name="ChargePercentage" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryChargeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PolicyId" Type="Int32" Nullable="false" />
+          <Property Name="FromKm" Type="Int32" Nullable="false" />
+          <Property Name="ToKm" Type="Int32" Nullable="false" />
+          <Property Name="ChargePerKm" Type="Int32" />
+          <Property Name="TotalCharge" Type="Int32" />
+          <Property Name="MinOrderPrice" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryChargePolicy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreGroupId" Type="Int32" Nullable="false" />
+          <Property Name="EventComboTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ChargeSchema" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DriverInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DeliveryTimeConfig">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EventComboTypeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Activation" Type="Boolean" Nullable="false" />
+          <Property Name="BeforeSaleDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AfterSaleDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EventComboType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="ComboTypeId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="FileAttachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ext" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Height" Type="Int32" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="ParentType" Type="Int32" Nullable="false" />
+          <Property Name="IsPrioritize" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="FileAttachmentData">
+          <Key>
+            <PropertyRef Name="FileId" />
+          </Key>
+          <Property Name="FileId" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerAddressId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReceiverPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReceiverEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverAddressId" Type="Int32" Nullable="false" />
+          <Property Name="SendToCustomer" Type="Boolean" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PaidPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryRecordId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Charge" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="StringId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Distance" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="MinimumPaymentRequire" Type="Int32" Nullable="false" />
+          <Property Name="OrderStoreId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RawAddress" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="District" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OrderCombo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ComboId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="OrderPayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="IsCash" Type="Boolean" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BankCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PaymentStoreId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderUpdateStatusHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="NewStatus" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SaleBanner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Style" Type="Int32" Nullable="false" />
+          <Property Name="Header" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HeaderColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DescriptionColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Animation" Type="Int32" Nullable="false" />
+          <Property Name="IsMobile" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccountInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OnlinePayment" Type="Boolean" Nullable="false" />
+          <Property Name="Longtitude" Type="Double" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupType" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreGroupDetail">
+          <Key>
+            <PropertyRef Name="StoretId" />
+            <PropertyRef Name="StoreGroupId" />
+          </Key>
+          <Property Name="StoretId" Type="Int32" Nullable="false" />
+          <Property Name="StoreGroupId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TextConfig">
+          <Key>
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="SGCComboGiaTienEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AHFSDatas" EntityType="Self.AHFSData" />
+          <EntitySet Name="AssociatedComboes" EntityType="Self.AssociatedCombo" />
+          <EntitySet Name="Comboes" EntityType="Self.Combo" />
+          <EntitySet Name="ComboGroups" EntityType="Self.ComboGroup" />
+          <EntitySet Name="ComboProducts" EntityType="Self.ComboProduct" />
+          <EntitySet Name="ComboStoreGroups" EntityType="Self.ComboStoreGroup" />
+          <EntitySet Name="ComboTypes" EntityType="Self.ComboType" />
+          <EntitySet Name="CostBasedChargeDetails" EntityType="Self.CostBasedChargeDetail" />
+          <EntitySet Name="DeliveryChargeDetails" EntityType="Self.DeliveryChargeDetail" />
+          <EntitySet Name="DeliveryChargePolicies" EntityType="Self.DeliveryChargePolicy" />
+          <EntitySet Name="DeliveryRecords" EntityType="Self.DeliveryRecord" />
+          <EntitySet Name="DeliveryTimeConfigs" EntityType="Self.DeliveryTimeConfig" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="EventComboTypes" EntityType="Self.EventComboType" />
+          <EntitySet Name="FileAttachments" EntityType="Self.FileAttachment" />
+          <EntitySet Name="FileAttachmentDatas" EntityType="Self.FileAttachmentData" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderAddresses" EntityType="Self.OrderAddress" />
+          <EntitySet Name="OrderComboes" EntityType="Self.OrderCombo" />
+          <EntitySet Name="OrderPayments" EntityType="Self.OrderPayment" />
+          <EntitySet Name="OrderUpdateStatusHistories" EntityType="Self.OrderUpdateStatusHistory" />
+          <EntitySet Name="SaleBanners" EntityType="Self.SaleBanner" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="StoreGroups" EntityType="Self.StoreGroup" />
+          <EntitySet Name="StoreGroupDetails" EntityType="Self.StoreGroupDetail" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TextConfigs" EntityType="Self.TextConfig" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SGCComboGiaTienModelStoreContainer" CdmEntityContainer="SGCComboGiaTienEntities">
+          <EntitySetMapping Name="AHFSDatas">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.AHFSData">
+              <MappingFragment StoreEntitySet="AHFSData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Molecule" ColumnName="Molecule" />
+                <ScalarProperty Name="Alert" ColumnName="Alert" />
+                <ScalarProperty Name="Warning" ColumnName="Warning" />
+                <ScalarProperty Name="Indication" ColumnName="Indication" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="HasDoseLimit" ColumnName="HasDoseLimit" />
+                <ScalarProperty Name="AHFSID" ColumnName="AHFSID" />
+                <ScalarProperty Name="ATC" ColumnName="ATC" />
+                <ScalarProperty Name="Done" ColumnName="Done" />
+                <ScalarProperty Name="IsVN" ColumnName="IsVN" />
+                <ScalarProperty Name="RXCUI" ColumnName="RXCUI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssociatedComboes">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.AssociatedCombo">
+              <MappingFragment StoreEntitySet="AssociatedCombo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentComboId" ColumnName="ParentComboId" />
+                <ScalarProperty Name="ChildrenComboId" ColumnName="ChildrenComboId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comboes">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.Combo">
+              <MappingFragment StoreEntitySet="Combo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsSingle" ColumnName="IsSingle" />
+                <ScalarProperty Name="ComboGroupId" ColumnName="ComboGroupId" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComboGroups">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.ComboGroup">
+              <MappingFragment StoreEntitySet="ComboGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EventComboTypeId" ColumnName="EventComboTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComboProducts">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.ComboProduct">
+              <MappingFragment StoreEntitySet="ComboProduct">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ComboId" ColumnName="ComboId" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComboStoreGroups">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.ComboStoreGroup">
+              <MappingFragment StoreEntitySet="ComboStoreGroup">
+                <ScalarProperty Name="ComboId" ColumnName="ComboId" />
+                <ScalarProperty Name="StoreGroupId" ColumnName="StoreGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComboTypes">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.ComboType">
+              <MappingFragment StoreEntitySet="ComboType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CostBasedChargeDetails">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.CostBasedChargeDetail">
+              <MappingFragment StoreEntitySet="CostBasedChargeDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="FromPrice" ColumnName="FromPrice" />
+                <ScalarProperty Name="ToPrice" ColumnName="ToPrice" />
+                <ScalarProperty Name="ChargePercentage" ColumnName="ChargePercentage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryChargeDetails">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.DeliveryChargeDetail">
+              <MappingFragment StoreEntitySet="DeliveryChargeDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="FromKm" ColumnName="FromKm" />
+                <ScalarProperty Name="ToKm" ColumnName="ToKm" />
+                <ScalarProperty Name="ChargePerKm" ColumnName="ChargePerKm" />
+                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
+                <ScalarProperty Name="MinOrderPrice" ColumnName="MinOrderPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryChargePolicies">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.DeliveryChargePolicy">
+              <MappingFragment StoreEntitySet="DeliveryChargePolicy">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StoreGroupId" ColumnName="StoreGroupId" />
+                <ScalarProperty Name="EventComboTypeId" ColumnName="EventComboTypeId" />
+                <ScalarProperty Name="ChargeSchema" ColumnName="ChargeSchema" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryRecords">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.DeliveryRecord">
+              <MappingFragment StoreEntitySet="DeliveryRecord">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DriverInfo" ColumnName="DriverInfo" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryTimeConfigs">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.DeliveryTimeConfig">
+              <MappingFragment StoreEntitySet="DeliveryTimeConfig">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="DateDescription" ColumnName="DateDescription" />
+                <ScalarProperty Name="EventComboTypeId" ColumnName="EventComboTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Activation" ColumnName="Activation" />
+                <ScalarProperty Name="BeforeSaleDescription" ColumnName="BeforeSaleDescription" />
+                <ScalarProperty Name="AfterSaleDescription" ColumnName="AfterSaleDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventComboTypes">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.EventComboType">
+              <MappingFragment StoreEntitySet="EventComboType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="ComboTypeId" ColumnName="ComboTypeId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileAttachments">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.FileAttachment">
+              <MappingFragment StoreEntitySet="FileAttachment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Ext" ColumnName="Ext" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentType" ColumnName="ParentType" />
+                <ScalarProperty Name="IsPrioritize" ColumnName="IsPrioritize" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileAttachmentDatas">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.FileAttachmentData">
+              <MappingFragment StoreEntitySet="FileAttachmentData">
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerAddressId" ColumnName="CustomerAddressId" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+                <ScalarProperty Name="ReceiverEmail" ColumnName="ReceiverEmail" />
+                <ScalarProperty Name="ReceiverAddressId" ColumnName="ReceiverAddressId" />
+                <ScalarProperty Name="SendToCustomer" ColumnName="SendToCustomer" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="PaidPrice" ColumnName="PaidPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="DeliveryRecordId" ColumnName="DeliveryRecordId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="StringId" ColumnName="StringId" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="MinimumPaymentRequire" ColumnName="MinimumPaymentRequire" />
+                <ScalarProperty Name="OrderStoreId" ColumnName="OrderStoreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAddresses">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.OrderAddress">
+              <MappingFragment StoreEntitySet="OrderAddress">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RawAddress" ColumnName="RawAddress" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="District" ColumnName="District" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderComboes">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.OrderCombo">
+              <MappingFragment StoreEntitySet="OrderCombo">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ComboId" ColumnName="ComboId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderPayments">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.OrderPayment">
+              <MappingFragment StoreEntitySet="OrderPayment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="IsCash" ColumnName="IsCash" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PaymentStoreId" ColumnName="PaymentStoreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderUpdateStatusHistories">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.OrderUpdateStatusHistory">
+              <MappingFragment StoreEntitySet="OrderUpdateStatusHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleBanners">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.SaleBanner">
+              <MappingFragment StoreEntitySet="SaleBanner">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Style" ColumnName="Style" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="HeaderColor" ColumnName="HeaderColor" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DescriptionColor" ColumnName="DescriptionColor" />
+                <ScalarProperty Name="Animation" ColumnName="Animation" />
+                <ScalarProperty Name="IsMobile" ColumnName="IsMobile" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountInfo" ColumnName="AccountInfo" />
+                <ScalarProperty Name="ContactInfo" ColumnName="ContactInfo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OnlinePayment" ColumnName="OnlinePayment" />
+                <ScalarProperty Name="Longtitude" ColumnName="Longtitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreGroups">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.StoreGroup">
+              <MappingFragment StoreEntitySet="StoreGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GroupType" ColumnName="GroupType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreGroupDetails">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.StoreGroupDetail">
+              <MappingFragment StoreEntitySet="StoreGroupDetail">
+                <ScalarProperty Name="StoretId" ColumnName="StoretId" />
+                <ScalarProperty Name="StoreGroupId" ColumnName="StoreGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TextConfigs">
+            <EntityTypeMapping TypeName="SGCComboGiaTienModel.TextConfig">
+              <MappingFragment StoreEntitySet="TextConfig">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
